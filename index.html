@@ -505,9 +505,9 @@ document.addEventListener('change',e=>{
 
 /* ---------- início ---------- */
 try{const raw=localStorage.getItem(LS);if(raw){const o=JSON.parse(raw);if(o&&o.logs)S=Object.assign(S,o)}}catch(e){}
-if(!S.config){S.config={start:today(),days:{1:'A',2:'Q',4:'B',6:'L'},p5k:null,meta:1155};persist()}
+if(!S.config){S.config={start:today(),days:DAYS_V2,v:2,p5k:null,meta:1155};persist()}
 if(SOLO&&'serviceWorker' in navigator&&location.protocol==='https:'){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
-render();setInterval(()=>{const A=S.alg;if(A&&A.end){const ms=A.end-Date.now(),el=$('#atimer');if(ms<=0){beep();try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}ACT.algNext()}else if(el)el.textContent=fmtTime(Math.ceil(ms/1000))}const R=S.run;if(!R||!R.restEnd)return;const ms=R.restEnd-Date.now(),el=$('#timer');if(ms<=0){R.restEnd=0;persist();beep();try{navigator.vibrate&&navigator.vibrate(400)}catch(e){}if(ui.tab==='hoje'&&!R.resumo)render()}else if(el)el.textContent=fmtTime(Math.ceil(ms/1000))},500);initDb().then(()=>{migrate();if(S.lastSync&&Date.now()-S.lastSync>36e5)syncWatch(true)});
+render();setInterval(()=>{const A=S.alg;if(A&&A.end){const ms=A.end-Date.now(),el=$('#atimer');if(ms<=0){beep();try{navigator.vibrate&&navigator.vibrate(300)}catch(e){}ACT.algNext()}else if(el)el.textContent=fmtTime(Math.ceil(ms/1000))}const R=S.run;if(!R||!R.restEnd)return;const ms=R.restEnd-Date.now(),el=$('#timer');if(ms<=0){R.restEnd=0;persist();beep();try{navigator.vibrate&&navigator.vibrate(400)}catch(e){}if(ui.tab==='hoje'&&!R.resumo)render()}else if(el)el.textContent=fmtTime(Math.ceil(ms/1000))},500);initDb().then(()=>{if(S.config&&(S.config.v||1)<2){migrate();render()}if(S.lastSync&&Date.now()-S.lastSync>36e5)syncWatch(true)});
 </script>
 </body>
 </html>
